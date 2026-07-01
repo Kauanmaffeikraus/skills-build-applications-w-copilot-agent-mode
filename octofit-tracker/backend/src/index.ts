@@ -1,5 +1,6 @@
 import express from 'express';
 import { connectDb } from './config/database';
+import { port, host } from './server';
 import usersRouter from './routes/users';
 import teamsRouter from './routes/teams';
 import activitiesRouter from './routes/activities';
@@ -7,13 +8,6 @@ import workoutsRouter from './routes/workouts';
 import leaderboardRouter from './routes/leaderboard';
 
 const app = express();
-const port = Number(process.env.PORT) || 8000;
-
-// Build host for Codespaces if available, otherwise default to localhost
-const codespaceName = process.env.CODESPACE_NAME;
-const host = codespaceName
-  ? `https://${codespaceName}-${port}.app.github.dev`
-  : `http://localhost:${port}`;
 
 app.use(express.json());
 
