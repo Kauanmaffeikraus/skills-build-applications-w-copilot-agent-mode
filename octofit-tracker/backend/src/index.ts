@@ -7,7 +7,13 @@ import workoutsRouter from './routes/workouts';
 import leaderboardRouter from './routes/leaderboard';
 
 const app = express();
-const port = 8000;
+const port = Number(process.env.PORT) || 8000;
+
+// Build host for Codespaces if available, otherwise default to localhost
+const codespaceName = process.env.CODESPACE_NAME;
+const host = codespaceName
+  ? `https://${codespaceName}-${port}.app.github.dev`
+  : `http://localhost:${port}`;
 
 app.use(express.json());
 
@@ -25,7 +31,7 @@ connectDb()
   .then(() => {
     console.log('Connected to MongoDB');
     app.listen(port, () => {
-      console.log(`Backend listening on http://localhost:${port}`);
+      console.log(`Backend listening on ${host}`);
     });
   })
   .catch((error) => {
